@@ -42,7 +42,7 @@ Algoritmo gestionEmpanaderia
 	
 	// Precio empanadas
 	Definir precioCostoEmpanada como Real
-	precioCostoEmpanada <- 100
+	precioCostoEmpanada <- 100.5
 	Definir precioVentaEmpanada como Real
 	precioVentaEmpanada <- 200	
 	Definir rentabilidadEmpanada Como Real
@@ -82,7 +82,7 @@ Algoritmo gestionEmpanaderia
 					si pedidoEmpanadaCarne>stockEmpanadaCarne Entonces
 						Mostrar "No es posible vender esa cantidad, hay " stockEmpanadaCarne " empanadas de carne en stock"
 					FinSi
-				Hasta Que pedidoEmpanadaCarne<stockEmpanadaCarne
+				Hasta Que pedidoEmpanadaCarne<=stockEmpanadaCarne
 				stockEmpanadaCarne <- stockEmpanadaCarne-pedidoEmpanadaCarne
 				totalEmpanadasVenta <- totalEmpanadasVenta+pedidoEmpanadaCarne
 				
@@ -93,7 +93,7 @@ Algoritmo gestionEmpanaderia
 					si pedidoEmpanadaJamonQueso>stockEmpanadaJamonQueso Entonces
 						Mostrar "No es posible vender esa cantidad, hay " stockEmpanadaJamonQueso " empanadas de jamón y queso en stock"
 					FinSi
-				Hasta Que pedidoEmpanadaJamonQueso<stockEmpanadaJamonQueso
+				Hasta Que pedidoEmpanadaJamonQueso<=stockEmpanadaJamonQueso
 				stockEmpanadaCarne <- stockEmpanadaJamonQueso-pedidoEmpanadaJamonQueso
 				totalEmpanadasVenta <- totalEmpanadasVenta+pedidoEmpanadaJamonQueso
 				
@@ -104,7 +104,7 @@ Algoritmo gestionEmpanaderia
 					si pedidoEmpanadaHumita>stockEmpanadaHumita Entonces
 						Mostrar "No es posible vender esa cantidad, hay " stockEmpanadaHumita " empanadas de humita en stock"
 					FinSi
-				Hasta Que pedidoEmpanadaHumita<stockEmpanadaHumita
+				Hasta Que pedidoEmpanadaHumita<=stockEmpanadaHumita
 				stockEmpanadaCarne <- stockEmpanadaHumita-pedidoEmpanadaHumita
 				totalEmpanadasVenta <- totalEmpanadasVenta+pedidoEmpanadaHumita
 				
@@ -131,7 +131,11 @@ Algoritmo gestionEmpanaderia
 				
 				gananciaDiaria <- gananciaDiaria+gananciaTotalPedido
 				
+				Mostrar ""
+				Mostrar "¡Venta exitosa!"
+				
 			2:
+				Mostrar ""
 				Mostrar "La caja actual es $" cajaInicial+ventaEfectivo
 				Mostrar ""
 				Mostrar "La venta diaria en efectivo es $" ventaEfectivo
@@ -139,8 +143,35 @@ Algoritmo gestionEmpanaderia
 				Mostrar""
 				Mostrar "La ganancia diara es $" gananciaDiaria
 				
+			3:
+				Mostrar ""
+				Mostrar "Hay " stockEmpanadaCarne " empanadas de carne en stock"
+				Mostrar "Hay " stockEmpanadaJamonQueso " empanadas de jamón y queso en stock"
+				Mostrar "Hay " stockEmpanadaHumita " empanadas de humita en stock"
+				
+				Mostrar ""
+				Mostrar "¿Desea modificar stock?"
+				Mostrar "1- Sí"
+				Escribir "2- No"
+				Leer opcionStock
+				
+				si opcionStock = 1 Entonces
+					Mostrar ""
+					Escribir "Ingrese nuevo stock de empanadas de Carne"
+					Leer stockEmpanadaCarne
+					
+					Mostrar ""
+					Escribir "Ingrese nuevo stock de empanadas de Jamón y queso"
+					Leer stockEmpanadaJamonQueso
+					
+					Mostrar ""
+					Escribir "Ingrese nuevo stock de empanadas de Humita"
+					Leer stockEmpanadaHumita
+				FinSi
+				
 			De Otro Modo:
-				Mostrar "Ingrese una opción válida"
+				Mostrar ""
+				Mostrar "¡INGRESE UNA OPCIÓN VÁLIDA!"
 		Fin Segun
 		
 	Hasta Que opcionMenu=5
