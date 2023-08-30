@@ -21,24 +21,13 @@ Algoritmo gestionEmpanaderia
 	Definir gananciaDiaria como Real
 	gananciaDiaria <- 0
 	
-	// Stock de Mercadería
+	// Stock empanadas
 	Definir stockEmpanadaCarne Como Entero
 	stockEmpanadaCarne <- 0
 	Definir stockEmpanadaJamonQueso Como Entero
 	stockEmpanadaJamonQueso <- 0
 	Definir stockEmpanadaHumita Como Entero
 	stockEmpanadaHumita <- 0
-	
-	// Ingreso caja y stock inicial
-	Escribir "Ingrese caja inicial (efectivo)"
-	Leer cajaInicial
-
-	Escribir "Ingrese stock inicial de empanadas de carne"
-	Leer stockEmpanadaCarne
-	Escribir "Ingrese stock inicial de empanadas de jamón y queso"
-	Leer stockEmpanadaJamonQueso
-	Escribir "Ingrese stock inicial de empanadas de humita"
-	Leer stockEmpanadaHumita
 	
 	// Precio empanadas
 	Definir precioCostoEmpanada como Real
@@ -57,6 +46,17 @@ Algoritmo gestionEmpanaderia
 	Definir montoTotalPedido Como Real
 	Definir gananciaTotalPedido Como Real	
 	
+	// Ingreso caja y stock inicial
+	Escribir "Ingrese caja inicial (efectivo)"
+	Leer cajaInicial
+
+	Escribir "Ingrese stock inicial de empanadas de carne"
+	Leer stockEmpanadaCarne
+	Escribir "Ingrese stock inicial de empanadas de jamón y queso"
+	Leer stockEmpanadaJamonQueso
+	Escribir "Ingrese stock inicial de empanadas de humita"
+	Leer stockEmpanadaHumita
+	
 	// Menú de opciones
 	Repetir
 		Mostrar ""
@@ -69,7 +69,7 @@ Algoritmo gestionEmpanaderia
 		Leer opcionMenu
 		
 		Segun opcionMenu Hacer
-			1:
+			1: // Realizar una venta
 				// Ingreso de pedido
 				Mostrar ""
 				Mostrar "Realizará una venta. Recuerde que llevando 12 empanadas o más, el cliente obtiene un 10% de descuento"
@@ -94,7 +94,7 @@ Algoritmo gestionEmpanaderia
 						Mostrar "No es posible vender esa cantidad, hay " stockEmpanadaJamonQueso " empanadas de jamón y queso en stock"
 					FinSi
 				Hasta Que pedidoEmpanadaJamonQueso<=stockEmpanadaJamonQueso
-				stockEmpanadaCarne <- stockEmpanadaJamonQueso-pedidoEmpanadaJamonQueso
+				stockEmpanadaJamonQueso <- stockEmpanadaJamonQueso-pedidoEmpanadaJamonQueso
 				totalEmpanadasVenta <- totalEmpanadasVenta+pedidoEmpanadaJamonQueso
 				
 				Repetir
@@ -105,16 +105,18 @@ Algoritmo gestionEmpanaderia
 						Mostrar "No es posible vender esa cantidad, hay " stockEmpanadaHumita " empanadas de humita en stock"
 					FinSi
 				Hasta Que pedidoEmpanadaHumita<=stockEmpanadaHumita
-				stockEmpanadaCarne <- stockEmpanadaHumita-pedidoEmpanadaHumita
+				stockEmpanadaHumita <- stockEmpanadaHumita-pedidoEmpanadaHumita
 				totalEmpanadasVenta <- totalEmpanadasVenta+pedidoEmpanadaHumita
 				
 				// Cálculo del monto total y ganancia del pedido
 				montoTotalPedido <- totalEmpanadasVenta*precioVentaEmpanada
 				
-				Mostrar "El monto total a abonar es $" montoTotalPedido ", ¿cómo desea abonar?"
-				Mostrar "1- Efectivo"
-				Escribir "2- Tarjeta"
-				Leer medioDePago
+				Repetir
+					Mostrar "El monto total a abonar es $" montoTotalPedido ", ¿cómo desea abonar?"
+					Mostrar "1- Efectivo"
+					Escribir "2- Tarjeta"
+					Leer medioDePago
+				Hasta Que medioDePago==1 o medioDePago==2
 				
 				Segun medioDePago Hacer
 					1:
@@ -134,16 +136,18 @@ Algoritmo gestionEmpanaderia
 				Mostrar ""
 				Mostrar "¡Venta exitosa!"
 				
-			2:
+			2: // Ver caja, venta y ganancia diaria
 				Mostrar ""
-				Mostrar "La caja actual es $" cajaInicial+ventaEfectivo
+				Mostrar "La caja actual (efectivo) es $" cajaInicial+ventaEfectivo
+				
 				Mostrar ""
 				Mostrar "La venta diaria en efectivo es $" ventaEfectivo
 				Mostrar "La venta diaria con tarjeta es $" ventaTarjeta
+				
 				Mostrar""
 				Mostrar "La ganancia diara es $" gananciaDiaria
 				
-			3:
+			3: // Ver o modificar stock de mercadería
 				Mostrar ""
 				Mostrar "Hay " stockEmpanadaCarne " empanadas de carne en stock"
 				Mostrar "Hay " stockEmpanadaJamonQueso " empanadas de jamón y queso en stock"
@@ -167,14 +171,49 @@ Algoritmo gestionEmpanaderia
 					Mostrar ""
 					Escribir "Ingrese nuevo stock de empanadas de Humita"
 					Leer stockEmpanadaHumita
+					
+					Mostrar ""
+					Mostrar "¡El stock fue modificado con éxito!"
 				FinSi
 				
-			De Otro Modo:
+			4: // Modificar precios de costo y venta
+				// Precio de costo (opción de modificación)
 				Mostrar ""
-				Mostrar "¡INGRESE UNA OPCIÓN VÁLIDA!"
+				Mostrar "El precio de costo actual de cada empanada es de $" precioCostoEmpanada ", ¿desea modificarlo?"
+				Mostrar "1- Sí"
+				Escribir "2- No"
+				Leer opcionCosto
+				
+				si opcionCosto = 1 Entonces
+					Mostrar ""
+					Escribir "Ingrese nuevo precio de costo"
+					Leer precioCostoEmpanada
+	
+					Mostrar ""
+					Mostrar "¡El precio de costo fue modificado exitosamente a $" precioCostoEmpanada "!"
+				FinSi
+				
+				// Precio de venta opción de modificación)
+				Mostrar ""
+				Mostrar "El precio de venta actual de cada empanada es de $" precioVentaEmpanada ", ¿desea modificarlo?"
+				Mostrar "1- Sí"
+				Escribir "2- No"
+				Leer opcionVenta
+				
+				si opcionVenta = 1 Entonces
+					Mostrar ""
+					Escribir "Ingrese nuevo precio de venta"
+					Leer precioVentaEmpanada
+					
+					Mostrar ""
+					Mostrar "¡El precio de Venta fue modificado exitosamente a $" precioVentaEmpanada "!"
+				FinSi
 		Fin Segun
 		
 	Hasta Que opcionMenu=5
+	
+	Mostrar ""
+	Mostrar "¡Adiós, " nombreUsuario "!"
 	
 	
 FinAlgoritmo
